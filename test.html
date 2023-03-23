@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* div:after{
+            position: absolute;
+            width: 0px;
+            height: 0px;
+            content: " ";
+            border-right: 100px solid transparent;
+            border-top: 100px solid #ff0;
+            border-left: 100px solid transparent;
+            border-bottom: 100px solid transparent;
+        } */
+    </style>
+</head>
+<body>
+    <div></div>
+    <script>
+        // function debounce(fn, delay) {
+        //     //记录上一次的延时器
+        //     var timer = null;
+        //     return function () {
+        //     //清除上一次的演示器
+        //         clearTimeout(timer);
+        //         //重新设置新的延时器
+        //         timer = setTimeout(function(){
+        //             //修正this指向问题
+        //             fn.apply(this);
+        //         }, delay); 
+        //     }
+        // }
+        // document.getElementById('btn').onclick = debounce(function () {
+        //     console.log('按钮被点击了' + Date.now());
+        // }, 1000);
+        // var obj = {
+        //     test: this,
+        //     foo() {
+        //         console.log(this);
+        //     },
+        //     bar: () => {
+        //         setTimeout()
+        //         console.log(this);
+        //     }
+        // }
+        // function test() {
+        //     // setTimeout(() => {
+        //     //     console.log(this); // t
+        //     // }, 1000)
+        //     setTimeout(function () {
+        //         console.log(this); // window
+        //     },1000) 
+        // }
+        // let t = new test()
+        // function foo() {
+        //     // setTimeout(function() {
+        //     //     console.log(this.id);
+        //     // }, 500)
+        //     // setTimeout(() =>
+        //     //     console.log(this.id)
+        //     // , 500)
+        //     function normalFunction() {
+        //         // console.log(this.id);
+        //         setTimeout(() => {
+        //             console.log(this);
+        //         },1000)
+        //     }
+        //     normalFunction()
+        //     console.log(this.id);
+        // }
+        // var id = 21
+        // foo.call({id: 42})
+        // console.log(window);
+        // function Animal(weight) {
+        //     this.weight = weight
+        // }
+        // Animal.prototype.name = 'animal'
+        // let cat = new Animal(10)
+        // console.log(cat)
+        // console.log(Animal.prototype);
+        // console.log(cat.__proto__);
+        // console.log(Animal.prototype.__proto__);
+        // function test() {
+        //     setTimeout(function () {
+        //         console.log(this);
+        //     }, 1000)
+        // }
+        // function test() {
+        //     console.log(this);
+        // }
+        // // let t = new Test()
+        // // console.log(test.prototype.constructor);
+        // console.log(test.prototype.__proto__);
+        // // console.log(test.__proto__.constructor);
+        // // setTimeout(console.log(this), 1000)
+        // function Product(name, price) {
+        //     this.name = name;
+        //     this.price = price;
+        // }
+
+        // function Food(name, price) {
+        //     Product.call(this, name, price);
+        //     this.category = 'food';
+        // }
+
+        // function Toy(name, price) {
+        //     Product.call(this, name, price);
+        //     this.category = 'toy';
+        // }
+
+        // var cheese = new Food('feta', 5);
+        // var fun = new Toy('robot', 40);
+
+        // console.log(cheese)
+        // console.log(fun)
+        // async function hd(){
+        //     // return 'liuyuu'
+        //     await 
+        // }
+        // hd().then(v=>console.log(v))
+        // // console.log(hd());
+        // // let a = new Promise(resolve =>{
+        // //     resolve('liuyuu')
+        // // })
+        // // console.log(a);
+        // function test(){
+        //     return new Promise(resolve=>{
+        //         setTimeout(()=>{
+        //             resolve('liuyuu')
+        //         },3000)
+        //     })
+        // }
+        // test().then(v=>console.log(v))
+        // // 相当于
+        // // new Promise(resolve=>{
+        // //     setTimeout(()=>{
+        // //         resolve('liuyuu')
+        // //     },3000)
+        // // }).then(v=>console.log(v))
+        // // console.log(test());
+
+        // async function async1(){
+        //     console.log('async1 start');
+        //     await async2();
+        //     console.log('async1 end')
+        // }
+        // async function async2(){
+        //     console.log('async2')
+        //     return 'async'
+        // }
+        // // console.log('script start');
+        // async1();
+        // for(let i = 0;i < 1000;i++){
+        //     console.log(i);
+        // }
+        // // console.log('script end')
+        // // console.log('end');
+        // const p = Promise.reject('出错了')
+        // p.then(null, () => {
+        //     console.log('reason:');
+        // }).catch((e) => {
+        //     console.log('catch:',e);
+        // })
+        // const p1 = new Promise((resolve) => {
+        //     setTimeout(() => {
+        //         resolve('resolve3')
+        //         console.log('timer1');
+        //     },0)
+        //     resolve('resolve1')
+        //     resolve('resolve2')
+        // }).then(res => {
+        //     console.log(res);
+        //     setTimeout(()=> {
+        //         console.log(p1);
+        //     },1000)
+        //     return 'then的返回值'
+        // }).finally(res => {
+        //     console.log('finally',res);
+        // })
+        const p2 = new Promise((resolve) => {
+            // setTimeout(() => {
+            //     resolve('resolve3')
+            //     console.log('timer1');
+            // },0)
+            resolve('resolve1')
+            resolve('resolve2')
+        }).then(res => {
+            console.log(res);
+            // console.log(p2);
+            setTimeout(()=> {
+                console.log(p2);
+            },1000)
+        }).finally(()=>{
+
+        })
+        // console.log(p2);
+        // const p = Promise.resolve(1)
+        // p.then(() => {}).finally(()=> {})
+        // console.log(p);
+        // Promise.resolve(1)
+        // .then(2)
+        // // .then(Promise.resolve(3))
+        // .then((res)=> {
+        //     console.log(res);
+        //     // return Promise.resolve(3)
+        //     return 'success'
+        // })
+        // .catch(4)
+        // .then(res => console.log(res))
+        // // console.log('first');
+        // setTimeout(() => {
+        //     console.log('timer');
+        // })
+        // let p = new Promise((resolve,reject) => {
+        //     console.log(7);
+        //     setTimeout(()=>{
+        //         console.log(5);
+        //         resolve(6)
+        //         console.log(p);
+        //     },0)
+        //     resolve(1)
+        // })
+        // p.then((res)=>{
+        //     console.log(res);
+        // })
+
+    </script>
+</body>
+</html>

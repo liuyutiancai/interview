@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="btn">防抖</button>
+    <script>
+        function debounce(fn, delay) {
+            //记录上一次的延时器
+            var timer = null;
+            return function () {
+            //清除上一次的演示器
+                clearTimeout(timer);
+                //重新设置新的延时器
+                timer = setTimeout(function(){
+                    //修正this指向问题
+                    fn.apply(this);
+                }, delay); 
+            }
+        }
+        document.getElementById('btn').onclick = debounce(function () {
+            console.log('按钮被点击了' + Date.now());
+        }, 1000);
+    </script>
+</body>
+</html>

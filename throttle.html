@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div style="background-color: green;">1</div>
+    <div style="background-color: skyblue;">2</div>
+    <div style="background-color: pink;">3</div>
+    <div style="background-color: green;">4</div>
+    <div style="background-color: skyblue;">5</div>
+    <div style="background-color: pink;">6</div>
+    <div style="background-color: green;">7</div>
+    <div style="background-color: skyblue;">8</div>
+    <div style="background-color: pink;">9</div>
+    <div style="background-color: green;">10</div>
+    <div style="background-color: skyblue;">11</div>
+    <div style="background-color: pink;">12</div>
+    <div style="background-color: green;">13</div>
+    <div style="background-color: skyblue;">14</div>
+    <div style="background-color: pink;">15</div>
+    <div style="background-color: green;">16</div>
+    <div style="background-color: skyblue;">17</div>
+    <div style="background-color: pink;">18</div>
+    <script>
+        // 节流
+        function throttle(fn, delay) {
+            //记录上一次函数触发的时间
+            var lastTime = 0;
+            return function(){
+                console.log(this);
+                //记录当前函数触发的时间
+                var nowTime = Date.now();
+                console.log('查看时间',lastTime,nowTime);
+                if(nowTime - lastTime > delay){
+                    //修正this指向问题 不知道为啥要修改this的指向
+                    fn.call(this);
+                    //同步执行结束时间
+                    lastTime = nowTime;
+                }
+            }
+        }
+        // console.log(throttle(function () {
+        //     console.log('scllor事件被触发了' + Date.now());
+        // }, 20000));
+        document.onscroll = throttle(function () {
+            console.log('scllor事件被触发了' + Date.now());
+            // console.log(this);
+        }, 20000);
+    </script>
+</body>
+</html>

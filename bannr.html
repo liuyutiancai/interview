@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+            position: relative;
+            /* 需要设置子绝父相 */
+            /* 上一张和下一张需要在轮播图左右两边中间 */
+            width: 600px;
+            /* 必须设置高度跟img-li相同 */
+            /* 因为container有背景色,还是除了img-ul的元素的父元素 */
+            height: 400px;
+            overflow: hidden;
+            margin: 0 auto;
+            background-color: gray;
+        }
+        .img-ul{
+            display: flex;
+            /* 需要给ul设置宽度,不设置宽度的话,它的宽度为父元素container的宽度 */
+            /* 而默认flex-wrap为nowrap,它的子元素img-li的宽度不再是600px */
+            width: 4200px;
+            /* height: 400px; */
+            margin: 0;
+            padding: 0;
+            /* 设置定位为了js操作 */
+            position: absolute;
+            left: 0;
+        }
+        .img-li{
+            list-style: none;
+            width: 600px;
+            height: 400px;
+            /* 每个img中的文字垂直水平居中 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: aquamarine;
+            font-size: 30px;
+            font-weight: 800;
+            border: 1px solid #ccc;
+        }
+        .prev,
+        .next {
+            position: absolute;
+            top: 0;
+            width: 80px;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .prev {
+            left: 0;
+        }
+        .next {
+            right: 0;
+        }
+        /* 不能给.prev和.next设置高度 */
+        /* 因为上面为了使用flex布局justify-content  align-items使其水平垂直居中设置了高度为400px*/
+        .prev span,
+        .next span {
+            /* 为什么不设置span为块级标签也能设置宽高 */
+            /* display: block; */
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(0,0,0,0.5);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        .num-box {
+            position: absolute;
+            left: 50%;
+            bottom: 20px;
+            transform: translateX(-50%);
+            /* 下面的也可以 */
+            /* transform: translate(-50%,0); */
+        }
+        .num-ul {
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+        .num-ul li {
+            list-style: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 9px;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            margin: 0 4px;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- 需要实现的效果 -->
+    <!-- 
+        1.图片自动轮播
+        2.轮播有动画效果
+        3.点击左右按钮可切换
+        4.点击数字按钮切换到对应图片
+        5.数字按钮有选中效果
+        6.鼠标移入停止自动播放
+     -->
+     <div class="container">
+        <!-- 图片列表 -->
+        <ul class="img-ul">
+            <li class="img-li">1</li>
+            <li class="img-li">2</li>
+            <li class="img-li">3</li>
+            <li class="img-li">4</li>
+            <li class="img-li">5</li>
+        </ul>
+        <!-- 上一张 下一张 -->
+        <div class="prev">
+            <span>&lt;</span>
+        </div>
+        <div class="next">
+            <span>&gt;</span>
+        </div>
+        <!-- 数字切换按钮 -->
+        <div class="num-box">
+            <ul class="num-ul">
+                <!-- 使用自定义属性 -->
+                <!-- 在js中需要使用,来判断与哪一张图片对应，方便设置选中效果 -->
+                <li data-index="0">1</li>
+                <li data-index="1">2</li>
+                <li data-index="2">3</li>
+                <li data-index="3">4</li>
+                <li data-index="4">5</li>
+            </ul>
+        </div>
+     </div>
+     <script>
+        var containerDom = document.getElementsByClassName('container')[0]
+        var ulDom = document.getElementsByClassName('img-ul')[0]
+        var prevDom = document.getElementsByClassName('prev')[0].firstElementChild
+        var nextDom = document.getElementsByClassName('next')[0].firstElementChild
+        var numUlDom = document.getElementsByClassName('num-ul')[0]
+        var numList = document.getElementsByClassName('num-ul')[0].getElementsByTagName('li')
+
+        var currentIndex = 0 //当前显示的图片的索引
+        var timer = null //轮播图自动播放的定时器
+
+        numList[currentIndex].style.backgroundColor = '#ccc'
+
+        prevDom.addEventListener('click',prevFun)
+        nextDom.addEventListener('click',nextFun)
+        containerDom.addEventListener('mouseenter',stopAutoPlay)
+        containerDom.addEventListener('mouseleave',autoPlay)
+        numUlDom.addEventListener('click',numClick)
+
+        function prevFun(){
+            // ulDom.style.transition = '0.5s'
+            numList[currentIndex].style.backgroundColor = ''
+            if(currentIndex === 0){
+                // ulDom.style.transition = '0s'
+                currentIndex = 4
+            } else {
+                --currentIndex
+            }
+            ulDom.style.left = `-${currentIndex * 600}px`
+            numList[currentIndex].style.backgroundColor = '#ccc'
+        }
+        function nextFun(){
+            // ulDom.style.transition = '0.5s'
+            numList[currentIndex].style.backgroundColor = ''
+            if(currentIndex === 4){
+                // ulDom.style.transition = '0s'
+                currentIndex = 0
+            } else {
+                ++currentIndex
+            }
+            ulDom.style.left = `-${currentIndex * 600}px`
+            numList[currentIndex].style.backgroundColor = '#ccc'
+        }
+        function numClick(e){
+            // console.log(e);
+            // ulDom.style.transition = '0.5s'
+            let index = e.target.dataset.index
+            if(index === undefined){
+                return
+            }
+            numList[currentIndex].style.backgroundColor = ''
+            currentIndex = Number(index)
+            numList[currentIndex].style.backgroundColor  = '#ccc'
+            ulDom.style.left = `-${currentIndex * 600}px`
+        }
+        // 每隔1s自动播放下一张
+        function autoPlay(){
+            timer = setInterval(nextFun,1000)
+        }
+        // 取消自动播放
+        function stopAutoPlay(){
+            clearInterval(timer)
+        }
+     </script>
+</body>
+</html>
