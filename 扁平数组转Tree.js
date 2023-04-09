@@ -68,7 +68,7 @@ function listToTree(data) {
     }
     return tree
 }
-console.log(listToTree(arr)[0].children);
+// console.log(listToTree(arr)[0].children);
 // function arrayToTree(items){
 //     const result = []
 //     const itemMap = {}
@@ -79,3 +79,30 @@ console.log(listToTree(arr)[0].children);
 //     // console.log(itemMap);
 // }
 // arrayToTree(arr)
+function listToTreeBetter(list){
+    const map = {}, tree = []
+    for(let item of list){
+        let id = item.id, pid = item.pid
+        if(!map[id]) {
+            map[id] = {
+                children: []
+            }
+        }
+        map[id] = {
+            ...item,
+            children: map[id]['children']
+        }
+        if(pid) {
+            if(!map[pid]) {
+                map[pid] = {
+                    children: []
+                }
+            }
+            map[pid].children.push(map[id])
+        }else {
+            tree.push(map[id])
+        }
+    }
+    return tree
+}
+console.log(listToTreeBetter(arr)[0].children[1].children[0]);

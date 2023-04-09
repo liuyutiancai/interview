@@ -18,3 +18,27 @@ const newArr2 = arr.filter((currentValue,index) => arr.indexOf(currentValue) ===
 console.log(newArr2);
 
 // 将多维数组变为一维数组
+
+
+
+// sort()方法
+// 用于对数组的元素进行排序,可以按照字母或数字进行排序,可以进行升序或降序排序
+// 按照数字进行排序时,必须指定通过一个函数作为参数
+// 默认为按照字母升序进行排序
+// 1.sort()方法会改变原数组
+const fruits = ['Banana','Orange','Apple','Mango']
+fruits.sort()
+console.log(fruits);
+// 2.按照数字排序 
+// 2.1升序
+const points = [40,100,1,5,25,10]
+points.sort((a,b) => a -b)
+console.log(points);
+
+// 2.2降序
+points.sort((a,b) => b - a)
+console.log(points);
+
+// 3.按照字母 降序
+fruits.reverse()
+console.log(fruits);
